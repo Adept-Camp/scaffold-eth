@@ -5,6 +5,15 @@ import { Address, AddressInput, Balance } from "../components";
 import { useContractReader, useEventListener } from "../hooks";
 import { parseEther, formatEther } from "@ethersproject/units";
 
+import { Network, OpenSeaPort } from 'opensea-js';
+  
+import styled from 'styled-components';
+import { GITHUB_URL, onNetworkUpdate, OPENSEA_JS_URL, web3Provider } from '../constants';
+// import Log from '../components/ships-log-Log/index';
+import App from '../components/ships-log-App';
+
+
+
 export default function UI({address, mainnetProvider, userProvider, localProvider, yourLocalBalance, price, tx, readContracts, writeContracts }) {
 
   const [newPurpose, setNewPurpose] = useState("loading...");
@@ -17,8 +26,14 @@ export default function UI({address, mainnetProvider, userProvider, localProvide
   const setPurposeEvents = useEventListener(readContracts, "YourContract", "SetPurpose", localProvider, 1);
   console.log("📟 SetPurpose events:",setPurposeEvents)
 
+
+
+
+
+
   return (
     <div>
+    <App />
       {/*
         ⚙️ Here is a Dunks UI that displays and sets the purpose in your smart contract:
       */}

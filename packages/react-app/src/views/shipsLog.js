@@ -2,7 +2,10 @@ import { Network, OpenSeaPort } from 'opensea-js';
 import React from 'react';
 import styled from 'styled-components';
 import { GITHUB_URL, onNetworkUpdate, OPENSEA_JS_URL, web3Provider } from '../constants';
-import Log from '../ships-log/components/ships-log-Log';
+import Log from '../components/ships-log-Log/index';
+
+
+
 
 
 
