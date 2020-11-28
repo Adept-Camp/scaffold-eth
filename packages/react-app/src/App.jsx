@@ -120,6 +120,9 @@ function App() {
           <Menu.Item key="/exampleui">
             <Link onClick={()=>{setRoute("/exampleui")}} to="/exampleui">ExampleUI</Link>
           </Menu.Item>
+          <Menu.Item key="/ships-log">
+            <Link onClick={()=>{setRoute("/shipslog")}} to="/shipslog">Ships Log</Link>
+          </Menu.Item>
         </Menu>
 
         <Switch>
@@ -146,6 +149,19 @@ function App() {
             />
           </Route>
           <Route path="/exampleui">
+            <ExampleUI
+              address={address}
+              userProvider={userProvider}
+              mainnetProvider={mainnetProvider}
+              localProvider={localProvider}
+              yourLocalBalance={yourLocalBalance}
+              price={price}
+              tx={tx}
+              writeContracts={writeContracts}
+              readContracts={readContracts}
+            />
+          </Route>
+          <Route path="/ships-log">
             <ExampleUI
               address={address}
               userProvider={userProvider}
