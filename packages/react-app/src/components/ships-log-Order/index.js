@@ -7,7 +7,9 @@ import BundleMetadata from './BundleMetadata'
 import styled from 'styled-components';
 import { connectWallet } from '../../constants';
 import { OrderSide } from 'opensea-js/lib/types';
-import SalePrice from '../common/SalePrice';
+import  SalePrice from '../ships-log-common/SalePrice';
+
+
 
 const Card = styled.div.attrs({ className: "card mx-2 mb-4" })`
   min-width: 200px;

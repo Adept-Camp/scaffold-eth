@@ -1,8 +1,7 @@
-// everything below is from ships-log constants
-
 import * as Web3 from 'web3'
 import BigNumber from 'bignumber.js'
 import { PortisProvider } from 'portis'
+
 
 // MY INFURA_ID, SWAP IN YOURS FROM https://infura.io/dashboard/ethereum
 export const INFURA_ID = "5ce0898319eb4f5c9d4c982c8f78392a";

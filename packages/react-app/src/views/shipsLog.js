@@ -1,8 +1,10 @@
+import { Network, OpenSeaPort } from 'opensea-js';
 import React from 'react';
 import styled from 'styled-components';
-import Log from '../ships-log-Log/'
-import { OpenSeaPort, Network } from 'opensea-js';
-import { web3Provider, onNetworkUpdate, OPENSEA_JS_URL, GITHUB_URL } from '../../constants';
+import { GITHUB_URL, onNetworkUpdate, OPENSEA_JS_URL, web3Provider } from '../constants';
+import Log from '../ships-log/components/ships-log-Log';
+
+
 
 export default class App extends React.Component {
 

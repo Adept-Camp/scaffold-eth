@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Order from '../Order';
+import Order from '../ships-log-Order';
 import { OrderSide } from 'opensea-js/lib/types';
 import { connectWallet } from '../../constants';
 

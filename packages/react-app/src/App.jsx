@@ -13,7 +13,7 @@ import { Header, Account, Faucet, Ramp, Contract, GasGauge, Address } from "./co
 import { Transactor } from "./helpers";
 import { parseEther, formatEther } from "@ethersproject/units";
 //import Hints from "./Hints";
-import { Hints, ExampleUI } from "./views"
+import { Hints, ExampleUI, shipsLog, UI } from "./views"
 /*
     Welcome to 🏗 scaffold-eth !
 
@@ -120,8 +120,11 @@ function App() {
           <Menu.Item key="/exampleui">
             <Link onClick={()=>{setRoute("/exampleui")}} to="/exampleui">ExampleUI</Link>
           </Menu.Item>
+          <Menu.Item key="/ui">
+            <Link onClick={()=>{setRoute("/ui")}} to="/ui">UI</Link>
+          </Menu.Item>
           <Menu.Item key="/ships-log">
-            <Link onClick={()=>{setRoute("/shipslog")}} to="/shipslog">Ships Log</Link>
+            <Link onClick={()=>{setRoute("/shipsLog")}} to="/shipsLog">Ships Log</Link>
           </Menu.Item>
         </Menu>
 
@@ -148,6 +151,19 @@ function App() {
               price={price}
             />
           </Route>
+          <Route path="/ui">
+            <UI
+              address={address}
+              userProvider={userProvider}
+              mainnetProvider={mainnetProvider}
+              localProvider={localProvider}
+              yourLocalBalance={yourLocalBalance}
+              price={price}
+              tx={tx}
+              writeContracts={writeContracts}
+              readContracts={readContracts}
+            />
+          </Route>
           <Route path="/exampleui">
             <ExampleUI
               address={address}
@@ -161,7 +177,8 @@ function App() {
               readContracts={readContracts}
             />
           </Route>
-          <Route path="/ships-log">
+          
+          <Route path="/shipsLog">
             <ExampleUI
               address={address}
               userProvider={userProvider}
