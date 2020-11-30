@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import "antd/dist/antd.css";
 import { MailOutlined } from "@ant-design/icons";
 import { getDefaultProvider, InfuraProvider, JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
+import styled from 'styled-components';
 import "./App.css";
 import { Row, Col, Button, List, Tabs, Menu } from "antd";
 import Web3Modal from "web3modal";
@@ -14,8 +15,11 @@ import { Transactor } from "./helpers";
 import { parseEther, formatEther } from "@ethersproject/units";
 //import Hints from "./Hints";
 import { Hints, ExampleUI, shipsLog, UI } from "./views"
+
 /*
     Welcome to 🏗 scaffold-eth !
+
+
 
     Code:
     https://github.com/austintgriffith/scaffold-eth
@@ -116,7 +120,7 @@ function App() {
           </Menu.Item>
           <Menu.Item key="/hints">
             <Link onClick={()=>{setRoute("/hints")}} to="/hints">Hints</Link>
-          </Menu.Item>
+          </Menu.Item> 
           <Menu.Item key="/exampleui">
             <Link onClick={()=>{setRoute("/exampleui")}} to="/exampleui">ExampleUI</Link>
           </Menu.Item>

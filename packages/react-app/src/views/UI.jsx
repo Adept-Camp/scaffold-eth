@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import styled from 'styled-components';
 import { Button, List, Divider, Input, Card, DatePicker, Slider, Switch, Progress, Spin } from "antd";
 import { SyncOutlined } from '@ant-design/icons';
 import { Address, AddressInput, Balance } from "../components";
@@ -7,7 +8,7 @@ import { parseEther, formatEther } from "@ethersproject/units";
 
 import { Network, OpenSeaPort } from 'opensea-js';
   
-import styled from 'styled-components';
+
 import { GITHUB_URL, onNetworkUpdate, OPENSEA_JS_URL, web3Provider } from '../constants';
 // import Log from '../components/ships-log-Log/index';
 import App from '../components/ships-log-App';

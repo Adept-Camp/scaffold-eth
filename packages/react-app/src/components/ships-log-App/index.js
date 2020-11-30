@@ -1,8 +1,10 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import styled from 'styled-components';
 import { OpenSeaPort, Network } from 'opensea-js';
 import { web3Provider, onNetworkUpdate, OPENSEA_JS_URL, GITHUB_URL } from '../../constants';
 import Log from '../ships-log-Log/index';
+
 
 export default class App extends React.Component {
 
@@ -41,7 +43,7 @@ export default class App extends React.Component {
           <h6>
             <a target="_blank" rel="noopener noreferrer" href={OPENSEA_JS_URL}>
               <img alt="OpenSea logo" className="mr-2" src="https://adept.camp/wp-content/uploads/2020/11/cropped-comingoutofblack.png" /> Adept Camp & Post Vinyl Collective DAO Presents: 
-            </a> Yūgen 幽玄
+            </a> Yūgen 幽玄  Art is the Currency of the Infinite
           </h6>
         </Header>
         <main>

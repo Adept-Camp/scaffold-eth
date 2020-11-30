@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Order from '../ships-log-Order';
 import { OrderSide } from 'opensea-js/lib/types';
 import { connectWallet } from '../../constants';
+// import { WyvernSchemaName } from "opensea-js/lib/types"
 
 export default class Log extends React.Component {
   static propTypes = {
@@ -37,7 +38,6 @@ export default class Log extends React.Component {
       // 'token_id'
       // 'token_ids'
       // 'sale_kind'
-      
     }, this.state.page)
 
     this.setState({ orders, total: count })
