@@ -125,7 +125,7 @@ function App() {
             <Link onClick={()=>{setRoute("/exampleui")}} to="/exampleui">ExampleUI</Link>
           </Menu.Item>
           <Menu.Item key="/ui">
-            <Link onClick={()=>{setRoute("/ui")}} to="/ui">UI</Link>
+            <Link onClick={()=>{setRoute("/ui")}} to="/ui">Flowing Multiverse</Link>
           </Menu.Item>
           <Menu.Item key="/ships-log">
             <Link onClick={()=>{setRoute("/shipsLog")}} to="/shipsLog">Ships Log</Link>

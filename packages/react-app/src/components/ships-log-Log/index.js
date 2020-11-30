@@ -11,6 +11,11 @@ export default class Log extends React.Component {
     accountAddress: PropTypes.string
   };
 
+  // const asset = {
+  //   tokenAddress: "0x06012c8cf97bead5deae237070f9587f8e7a266d", // CryptoKitties
+  //   tokenId: "1", // Token ID
+  // }
+
   state = {
     orders: undefined,
     total: 0,
@@ -18,7 +23,10 @@ export default class Log extends React.Component {
     onlyForMe: false,
     onlyByMe: false,
     onlyBundles: false,
-    page: 1
+    page: 1,
+   // artsUniqueTokenId: undefined,
+    tokenAddress: "0x06012c8cf97bead5deae237070f9587f8e7a266d", // CryptoKitties
+
   };
 
   componentDidMount() {
@@ -31,11 +39,12 @@ export default class Log extends React.Component {
       maker: this.state.onlyByMe ? accountAddress : undefined,
       owner: this.state.onlyForMe ? accountAddress : undefined,
       side: this.state.side,
-      bundled: this.state.onlyBundles ? true : undefined
+      bundled: this.state.onlyBundles ? true : undefined,
       // Possible query options:
       // 'asset_contract_address'
       // 'taker'
-      // 'token_id'
+    //  token_id: ''
+      tokenAddress: "0x06012c8cf97bead5deae237070f9587f8e7a266d", // CryptoKitties
       // 'token_ids'
       // 'sale_kind'
     }, this.state.page)

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { OpenSeaPort, Network } from 'opensea-js';
 import { web3Provider, onNetworkUpdate, OPENSEA_JS_URL, GITHUB_URL } from '../../constants';
 import Log from '../ships-log-Log/index';
+import { Divider } from 'antd';
 
 
 export default class App extends React.Component {
@@ -38,13 +39,16 @@ export default class App extends React.Component {
         </a>
         <Header>
           <h1>
-          Yūgen 幽玄
+          Yūgen 幽玄  
           </h1>
+          <h4>Art is the Currency of the Infinite </h4>
+         <p>-- --- -- --- -- --- -- --- -- --- --</p>
           <h6>
             <a target="_blank" rel="noopener noreferrer" href={OPENSEA_JS_URL}>
               <img alt="OpenSea logo" className="mr-2" src="https://adept.camp/wp-content/uploads/2020/11/cropped-comingoutofblack.png" /> Adept Camp & Post Vinyl Collective DAO Presents: 
-            </a> Yūgen 幽玄  Art is the Currency of the Infinite
+            </a> 
           </h6>
+          <h4>Flowing Multiverse</h4>
         </Header>
         <main>
           <Log
