@@ -32,16 +32,19 @@ export default () => {
               seaport={seaportRef.current}
               tokenAddress="0x06012c8cf97bead5deae237070f9587f8e7a266d"
               tokenId="40"
+              accountAddress={accountAddress}
             />
             <SingleNFT
               seaport={seaportRef.current}
               tokenAddress="0x06012c8cf97bead5deae237070f9587f8e7a266d"
               tokenId="50"
+              accountAddress={accountAddress}
             />
             <SingleNFT
               seaport={seaportRef.current}
               tokenAddress="0x06012c8cf97bead5deae237070f9587f8e7a266d"
               tokenId="80"
+              accountAddress={accountAddress}
             />
           </div>
         </div>
