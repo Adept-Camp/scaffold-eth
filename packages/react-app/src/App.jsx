@@ -3,18 +3,26 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import "antd/dist/antd.css";
 import { MailOutlined } from "@ant-design/icons";
 import { getDefaultProvider, InfuraProvider, JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
-import styled from 'styled-components';
+import styled from "styled-components";
 import "./App.css";
 import { Row, Col, Button, List, Tabs, Menu } from "antd";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { useUserAddress } from "eth-hooks";
-import { useExchangePrice, useGasPrice, useUserProvider, useContractLoader, useContractReader, useBalance, useEventListener } from "./hooks";
+import {
+  useExchangePrice,
+  useGasPrice,
+  useUserProvider,
+  useContractLoader,
+  useContractReader,
+  useBalance,
+  useEventListener,
+} from "./hooks";
 import { Header, Account, Faucet, Ramp, Contract, GasGauge, Address } from "./components";
 import { Transactor } from "./helpers";
 import { parseEther, formatEther } from "@ethersproject/units";
 //import Hints from "./Hints";
-import { Hints, ExampleUI, shipsLog, UI } from "./views"
+import { Hints, ExampleUI, shipsLog, UI, Yugen } from "./views";
 
 /*
     Welcome to 🏗 scaffold-eth !
@@ -35,7 +43,7 @@ import { INFURA_ID, ETHERSCAN_KEY } from "./constants";
 const { TabPane } = Tabs;
 
 // 🔭 block explorer URL
-const blockExplorer = "https://etherscan.io/" // for xdai: "https://blockscout.com/poa/xdai/"
+const blockExplorer = "https://etherscan.io/"; // for xdai: "https://blockscout.com/poa/xdai/"
 
 // 🛰 providers
 console.log("📡 Connecting to Mainnet Ethereum");
@@ -50,8 +58,6 @@ const localProviderUrl = "http://localhost:8545"; // for xdai: https://dai.poa.n
 const localProviderUrlFromEnv = process.env.REACT_APP_PROVIDER ? process.env.REACT_APP_PROVIDER : localProviderUrl;
 console.log("🏠 Connecting to provider:", localProviderUrlFromEnv);
 const localProvider = new JsonRpcProvider(localProviderUrlFromEnv);
-
-
 
 function App() {
   const [injectedProvider, setInjectedProvider] = useState();
@@ -68,24 +74,23 @@ function App() {
   const address = useUserAddress(userProvider);
 
   // The transactor wraps transactions and provides notificiations
-  const tx = Transactor(userProvider, gasPrice)
+  const tx = Transactor(userProvider, gasPrice);
 
   // 🏗 scaffold-eth is full of handy hooks like this one to get your balance:
   const yourLocalBalance = useBalance(localProvider, address);
-  console.log("💵 yourLocalBalance",yourLocalBalance?formatEther(yourLocalBalance):"...")
+  console.log("💵 yourLocalBalance", yourLocalBalance ? formatEther(yourLocalBalance) : "...");
 
   // just plug in different 🛰 providers to get your balance on different chains:
   const yourMainnetBalance = useBalance(mainnetProvider, address);
-  console.log("💵 yourMainnetBalance",yourMainnetBalance?formatEther(yourMainnetBalance):"...")
+  console.log("💵 yourMainnetBalance", yourMainnetBalance ? formatEther(yourMainnetBalance) : "...");
 
   // Load in your local 📝 contract and read a value from it:
-  const readContracts = useContractLoader(localProvider)
-  console.log("📝 readContracts",readContracts)
+  const readContracts = useContractLoader(localProvider);
+  console.log("📝 readContracts", readContracts);
 
   // If you want to make 🔐 write transactions to your contracts, use the userProvider:
-  const writeContracts = useContractLoader(userProvider)
-  console.log("🔐 writeContracts",writeContracts)
-
+  const writeContracts = useContractLoader(userProvider);
+  console.log("🔐 writeContracts", writeContracts);
 
   const loadWeb3Modal = useCallback(async () => {
     const provider = await web3Modal.connect();
@@ -98,37 +103,80 @@ function App() {
     }
   }, [loadWeb3Modal]);
 
-  console.log("Location:",window.location.pathname)
+  console.log("Location:", window.location.pathname);
 
   const [route, setRoute] = useState();
   useEffect(() => {
-    console.log("SETTING ROUTE",window.location.pathname)
-    setRoute(window.location.pathname)
-  }, [ window.location.pathname ]);
+    console.log("SETTING ROUTE", window.location.pathname);
+    setRoute(window.location.pathname);
+  }, [window.location.pathname]);
 
   return (
     <div className="App">
-
       {/* ✏️ Edit the header and change the title to your project name */}
       <Header />
 
       <BrowserRouter>
-
-        <Menu style={{ textAlign:"center" }} selectedKeys={[route]} mode="horizontal">
+        <Menu style={{ textAlign: "center" }} selectedKeys={[route]} mode="horizontal">
           <Menu.Item key="/">
-            <Link onClick={()=>{setRoute("/")}} to="/">YourContract</Link>
+            <Link
+              onClick={() => {
+                setRoute("/");
+              }}
+              to="/"
+            >
+              YourContract
+            </Link>
           </Menu.Item>
           <Menu.Item key="/hints">
-            <Link onClick={()=>{setRoute("/hints")}} to="/hints">Hints</Link>
-          </Menu.Item> 
+            <Link
+              onClick={() => {
+                setRoute("/hints");
+              }}
+              to="/hints"
+            >
+              Hints
+            </Link>
+          </Menu.Item>
           <Menu.Item key="/exampleui">
-            <Link onClick={()=>{setRoute("/exampleui")}} to="/exampleui">ExampleUI</Link>
+            <Link
+              onClick={() => {
+                setRoute("/exampleui");
+              }}
+              to="/exampleui"
+            >
+              ExampleUI
+            </Link>
           </Menu.Item>
           <Menu.Item key="/ui">
-            <Link onClick={()=>{setRoute("/ui")}} to="/ui">Flowing Multiverse</Link>
+            <Link
+              onClick={() => {
+                setRoute("/ui");
+              }}
+              to="/ui"
+            >
+              Flowing Multiverse
+            </Link>
           </Menu.Item>
           <Menu.Item key="/ships-log">
-            <Link onClick={()=>{setRoute("/shipsLog")}} to="/shipsLog">Ships Log</Link>
+            <Link
+              onClick={() => {
+                setRoute("/shipsLog");
+              }}
+              to="/shipsLog"
+            >
+              Ships Log
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="/yugen">
+            <Link
+              onClick={() => {
+                setRoute("/Yugen");
+              }}
+              to="/Yugen"
+            >
+              Yugen
+            </Link>
           </Menu.Item>
         </Menu>
 
@@ -181,9 +229,23 @@ function App() {
               readContracts={readContracts}
             />
           </Route>
-          
+
           <Route path="/shipsLog">
             <ExampleUI
+              address={address}
+              userProvider={userProvider}
+              mainnetProvider={mainnetProvider}
+              localProvider={localProvider}
+              yourLocalBalance={yourLocalBalance}
+              price={price}
+              tx={tx}
+              writeContracts={writeContracts}
+              readContracts={readContracts}
+            />
+          </Route>
+
+          <Route path="/Yugen">
+            <Yugen
               address={address}
               userProvider={userProvider}
               mainnetProvider={mainnetProvider}
@@ -198,67 +260,68 @@ function App() {
         </Switch>
       </BrowserRouter>
 
-
       {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
       <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 10 }}>
-         <Account
-           address={address}
-           localProvider={localProvider}
-           userProvider={userProvider}
-           mainnetProvider={mainnetProvider}
-           price={price}
-           web3Modal={web3Modal}
-           loadWeb3Modal={loadWeb3Modal}
-           logoutOfWeb3Modal={logoutOfWeb3Modal}
-           blockExplorer={blockExplorer}
-         />
+        <Account
+          address={address}
+          localProvider={localProvider}
+          userProvider={userProvider}
+          mainnetProvider={mainnetProvider}
+          price={price}
+          web3Modal={web3Modal}
+          loadWeb3Modal={loadWeb3Modal}
+          logoutOfWeb3Modal={logoutOfWeb3Modal}
+          blockExplorer={blockExplorer}
+        />
       </div>
 
       {/* 🗺 Extra UI like gas price, eth price, faucet, and support: */}
-       <div style={{ position: "fixed", textAlign: "left", left: 0, bottom: 20, padding: 10 }}>
-         <Row align="middle" gutter={[4, 4]}>
-           <Col span={8}>
-             <Ramp price={price} address={address} />
-           </Col>
+      <div style={{ position: "fixed", textAlign: "left", left: 0, bottom: 20, padding: 10 }}>
+        <Row align="middle" gutter={[4, 4]}>
+          <Col span={8}>
+            <Ramp price={price} address={address} />
+          </Col>
 
-           <Col span={8} style={{ textAlign: "center", opacity: 0.8 }}>
-             <GasGauge gasPrice={gasPrice} />
-           </Col>
-           <Col span={8} style={{ textAlign: "center", opacity: 1 }}>
-             <Button
-               onClick={() => {
-                 window.open("https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA");
-               }}
-               size="large"
-               shape="round"
-             >
-               <span style={{ marginRight: 8 }} role="img" aria-label="support">
-                 💬
-               </span>
-               Support
-             </Button>
-           </Col>
-         </Row>
+          <Col span={8} style={{ textAlign: "center", opacity: 0.8 }}>
+            <GasGauge gasPrice={gasPrice} />
+          </Col>
+          <Col span={8} style={{ textAlign: "center", opacity: 1 }}>
+            <Button
+              onClick={() => {
+                window.open("https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA");
+              }}
+              size="large"
+              shape="round"
+            >
+              <span style={{ marginRight: 8 }} role="img" aria-label="support">
+                💬
+              </span>
+              Support
+            </Button>
+          </Col>
+        </Row>
 
-         <Row align="middle" gutter={[4, 4]}>
-           <Col span={24}>
-             {
-
-               /*  if the local provider has a signer, let's show the faucet:  */
-               localProvider && localProvider.connection && localProvider.connection.url && localProvider.connection.url.indexOf("localhost")>=0 && !process.env.REACT_APP_PROVIDER && price > 1 ? (
-                 <Faucet localProvider={localProvider} price={price} ensProvider={mainnetProvider}/>
-               ) : (
-                 ""
-               )
-             }
-           </Col>
-         </Row>
-       </div>
-
+        <Row align="middle" gutter={[4, 4]}>
+          <Col span={24}>
+            {
+              /*  if the local provider has a signer, let's show the faucet:  */
+              localProvider &&
+              localProvider.connection &&
+              localProvider.connection.url &&
+              localProvider.connection.url.indexOf("localhost") >= 0 &&
+              !process.env.REACT_APP_PROVIDER &&
+              price > 1 ? (
+                <Faucet localProvider={localProvider} price={price} ensProvider={mainnetProvider} />
+              ) : (
+                ""
+              )
+            }
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 }
-
 
 /*
   Web3 modal helps us "connect" external wallets:
