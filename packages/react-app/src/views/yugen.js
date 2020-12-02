@@ -30,21 +30,18 @@ export default () => {
           <div className="card-deck">
             <SingleNFT
               seaport={seaportRef.current}
-              tokenAddress="0x06012c8cf97bead5deae237070f9587f8e7a266d"
-              tokenId="40"
-              accountAddress={accountAddress}
+              tokenAddress="0x9fed46c6de6c49f0ba2c60401f8f72408a15ee28"
+              tokenId="4"
             />
             <SingleNFT
               seaport={seaportRef.current}
-              tokenAddress="0x06012c8cf97bead5deae237070f9587f8e7a266d"
-              tokenId="50"
-              accountAddress={accountAddress}
+              tokenAddress="0x60f80121c31a0d46b5279700f9df786054aa5ee5"
+              tokenId="71403"
             />
             <SingleNFT
               seaport={seaportRef.current}
-              tokenAddress="0x06012c8cf97bead5deae237070f9587f8e7a266d"
-              tokenId="80"
-              accountAddress={accountAddress}
+              tokenAddress="0x144b8f23a774e3f019c9610d1aa4d88a77ad39f6"
+              tokenId="22"
             />
           </div>
         </div>
