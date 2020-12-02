@@ -28,20 +28,27 @@ export default ({
     setAssetInfo(null);
     setOrders(null);
     if (seaport) {
-      const asset = await seaport.api.getAsset({
-        tokenAddress, // string
-        tokenId, // string | number | null
-      });
+      try {
+        const asset = await seaport.api.getAsset({
+          tokenAddress, // string
+          tokenId, // string | number | null
+        });
+        setAssetInfo(asset);
+      } catch (error) {
+        setAssetInfo(null);
+      }
 
-      const { orders, count } = await seaport.api.getOrders({
-        asset_token_address: tokenAddress,
-        token_id: tokenId,
-        side: OrderSide.Sell,
-      });
-
-      console.log(asset, orders);
-      setAssetInfo(asset);
-      setOrders(orders);
+      try {
+        const { orders } = await seaport.api.getOrders({
+          asset_token_address: tokenAddress,
+          token_id: tokenId,
+          side: OrderSide.Sell,
+        });
+        setOrders(orders);
+        console.log(orders);
+      } catch (error) {
+        setOrders([]);
+      }
     }
   }, [tokenAddress, tokenId, seaport]);
 
