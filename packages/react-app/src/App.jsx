@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link, Redirect } from "react-router-dom";
 import "antd/dist/antd.css";
 import { MailOutlined } from "@ant-design/icons";
 import { getDefaultProvider, InfuraProvider, JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
@@ -118,7 +118,7 @@ function App() {
 
       <BrowserRouter>
         <Menu style={{ textAlign: "center" }} selectedKeys={[route]} mode="horizontal">
-          <Menu.Item key="/">
+          {/* <Menu.Item key="/">
             <Link
               onClick={() => {
                 setRoute("/");
@@ -167,8 +167,8 @@ function App() {
             >
               Ships Log
             </Link>
-          </Menu.Item>
-          <Menu.Item key="/yugen">
+          </Menu.Item> */}
+          <Menu.Item key="/Yugen">
             <Link
               onClick={() => {
                 setRoute("/Yugen");
@@ -181,12 +181,7 @@ function App() {
         </Menu>
 
         <Switch>
-          <Route exact path="/">
-            {/*
-                🎛 this scaffolding is full of commonly used components
-                this <Contract/> component will automatically parse your ABI
-                and give you a form to interact with it locally
-            */}
+          {/* <Route exact path="/">
             <Contract
               name="YourContract"
               signer={userProvider.getSigner()}
@@ -242,9 +237,9 @@ function App() {
               writeContracts={writeContracts}
               readContracts={readContracts}
             />
-          </Route>
+          </Route> */}
 
-          <Route path="/Yugen">
+          <Route exact path="/Yugen">
             <Yugen
               address={address}
               userProvider={userProvider}
@@ -257,6 +252,8 @@ function App() {
               readContracts={readContracts}
             />
           </Route>
+
+          <Redirect to="/Yugen" />
         </Switch>
       </BrowserRouter>
 
