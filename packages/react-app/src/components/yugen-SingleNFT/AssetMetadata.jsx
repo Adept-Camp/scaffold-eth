@@ -7,7 +7,7 @@ const AssetMetadata = ({ asset, meta }) => {
   return (
     <React.Fragment>
       {meta.animation_url ? (
-        <VideoPlayer url={meta.animation_url} />
+        <VideoPlayer url={meta.animation_url} assetInfo={asset} />
       ) : (
         <a
           target="_blank"
