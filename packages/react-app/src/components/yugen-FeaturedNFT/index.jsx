@@ -7,6 +7,7 @@ import SalePrice from "./SalePrice";
 
 import Web3 from "web3";
 import Axios from "axios";
+import VideoPlayer from "../VideoPlayer";
 
 const infuraId = process.env.INFURA_KEY;
 const web3 = new Web3(
@@ -20,7 +21,6 @@ export default ({
   seaport,
 }) => {
   const [assetInfo, setAssetInfo] = useState(null);
-  const [orders, setOrders] = useState(null);
   const [assetMeta, setAssetMeta] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [creatingOrder, setCreatingOrder] = useState(false);
@@ -33,7 +33,7 @@ export default ({
 
   const handleLoadAsset = useCallback(async () => {
     setAssetInfo(null);
-    setOrders(null);
+    setAssetMeta(null);
     if (seaport) {
       try {
         const asset = await seaport.api.getAsset({
@@ -66,17 +66,6 @@ export default ({
       } catch (error) {
         console.error(error);
       }
-
-      try {
-        const { orders } = await seaport.api.getOrders({
-          asset_token_address: tokenAddress,
-          token_id: tokenId,
-          side: OrderSide.Sell,
-        });
-        setOrders(orders);
-      } catch (error) {
-        setOrders([]);
-      }
     }
   }, [tokenAddress, tokenId, seaport]);
 
@@ -92,38 +81,18 @@ export default ({
     // throw error;
   };
 
-  const fulfillOrder = async () => {
-    if (!accountAddress) {
-      await connectWallet();
-    }
-    try {
-      setCreatingOrder(true);
-      await seaport.fulfillOrder({ order: orders[0], accountAddress });
-    } catch (error) {
-      onError(error);
-    } finally {
-      setCreatingOrder(false);
-    }
-  };
+  const placeBid = () => {};
 
-  const renderBuyButton = (canAccept = true) => {
-    const buyAsset = async () => {
-      if (accountAddress && !canAccept) {
-        setErrorMessage("You already own this asset!");
-        return;
-      }
-      fulfillOrder();
-    };
+  const renderBidButton = () => {
     return (
-      <button disabled={creatingOrder} onClick={buyAsset} className="btn btn-primary w-100">
-        Buy{creatingOrder ? "ing" : ""} for <SalePrice order={orders[0]} />
+      <button onClick={() => placeBid()} className="btn btn-primary w-100">
+        PLACE BID
       </button>
     );
   };
 
-  if (!assetInfo || !orders) return <FeaturedNFTContainer>Loading •••</FeaturedNFTContainer>;
+  if (!assetInfo || !assetMeta) return <FeaturedNFTContainer>Loading •••</FeaturedNFTContainer>;
 
-  console.log(assetInfo);
   return (
     <FeaturedNFTContainer>
       <NFTColumn>
@@ -139,18 +108,23 @@ export default ({
             {errorMessage}
           </div>
         ) : (
-          orders.length > 0 && renderBuyButton(!isOwner)
+          // orders.length > 0 && renderBuyButton(!isOwner)
+          renderBidButton()
         )}
       </NFTColumn>
       <NFTColumn>
-        <NFTImageLink
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-center d-inline-block m-100"
-          href={assetInfo.openseaLink}
-        >
-          <NFTImg alt="Asset artwork" src={assetInfo.imageUrlOriginal} />
-        </NFTImageLink>
+        {assetMeta.animation_url ? (
+          <VideoPlayer url={assetMeta.animation_url} />
+        ) : (
+          <NFTImageLink
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-center d-inline-block m-100"
+            href={assetInfo.openseaLink}
+          >
+            <NFTImg alt="Asset artwork" src={assetInfo.imageUrlOriginal} />
+          </NFTImageLink>
+        )}
       </NFTColumn>
     </FeaturedNFTContainer>
   );

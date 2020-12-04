@@ -1,19 +1,23 @@
 import React from "react";
 
 import styled from "styled-components";
+import VideoPlayer from "../VideoPlayer";
 
 const AssetMetadata = ({ asset, meta }) => {
-  console.log(meta);
   return (
     <React.Fragment>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-center d-inline-block m-100"
-        href={asset.openseaLink}
-      >
-        <img alt="Asset artwork" src={asset.imageUrl} />
-      </a>
+      {meta.animation_url ? (
+        <VideoPlayer url={meta.animation_url} />
+      ) : (
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-center d-inline-block m-100"
+          href={asset.openseaLink}
+        >
+          <img alt="Asset artwork" src={asset.imageUrl} />
+        </a>
+      )}
 
       <div className="card-body h-25">
         <h5 className="card-title">{asset.name}</h5>

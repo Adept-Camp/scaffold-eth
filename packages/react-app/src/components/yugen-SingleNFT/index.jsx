@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react";
-import { OrderSide } from "opensea-js/lib/types";
 import styled from "styled-components";
 
 import { connectWallet } from "../../constants";
@@ -21,7 +20,6 @@ export default ({
   seaport,
 }) => {
   const [assetInfo, setAssetInfo] = useState(null);
-  const [orders, setOrders] = useState(null);
   const [assetMeta, setAssetMeta] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [creatingOrder, setCreatingOrder] = useState(false);
@@ -34,13 +32,13 @@ export default ({
 
   const handleLoadAsset = useCallback(async () => {
     setAssetInfo(null);
-    setOrders(null);
     if (seaport) {
       try {
         const asset = await seaport.api.getAsset({
           tokenAddress, // string
           tokenId, // string | number | null
         });
+        console.log(asset);
         setAssetInfo(asset);
       } catch (error) {
         setAssetInfo(null);
@@ -67,17 +65,6 @@ export default ({
       } catch (error) {
         console.error(error);
       }
-
-      try {
-        const { orders } = await seaport.api.getOrders({
-          asset_token_address: tokenAddress,
-          token_id: tokenId,
-          side: OrderSide.Sell,
-        });
-        setOrders(orders);
-      } catch (error) {
-        setOrders([]);
-      }
     }
   }, [tokenAddress, tokenId, seaport]);
 
@@ -99,7 +86,7 @@ export default ({
     }
     try {
       setCreatingOrder(true);
-      await seaport.fulfillOrder({ order: orders[0], accountAddress });
+      await seaport.fulfillOrder({ order: assetInfo.orders[0], accountAddress });
     } catch (error) {
       onError(error);
     } finally {
@@ -117,13 +104,14 @@ export default ({
     };
     return (
       <button disabled={creatingOrder} onClick={buyAsset} className="btn btn-primary w-100">
-        Buy{creatingOrder ? "ing" : ""} for <SalePrice order={orders[0]} />
+        Buy{creatingOrder ? "ing" : ""} for <SalePrice order={assetInfo.orders[0]} />
       </button>
     );
   };
 
-  if (!assetInfo || !orders) return <SingleNFTContainer>Loading •••</SingleNFTContainer>;
+  if (!assetInfo || !assetMeta) return <SingleNFTContainer>Loading •••</SingleNFTContainer>;
 
+  console.log(assetMeta);
   return (
     <SingleNFTContainer>
       <AssetMetadata asset={assetInfo} meta={assetMeta} />
@@ -132,7 +120,7 @@ export default ({
           {errorMessage}
         </div>
       ) : (
-        <li className="list-group-item">{orders.length > 0 && renderBuyButton(!isOwner)}</li>
+        <li className="list-group-item">{assetInfo.orders.length > 0 && renderBuyButton(!isOwner)}</li>
       )}
     </SingleNFTContainer>
   );
