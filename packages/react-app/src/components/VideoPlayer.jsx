@@ -3,7 +3,7 @@ import ReactPlayer from "react-player";
 
 import styled from "styled-components";
 
-const VideoPlayer = ({ url }) => {
+const VideoPlayer = ({ url, assetInfo }) => {
   return (
     <VideoWidget>
       {url && (
@@ -17,7 +17,8 @@ const VideoPlayer = ({ url }) => {
             left: 0,
           }}
           playing
-          light
+          light={assetInfo.imageUrl}
+          controls
         />
       )}
     </VideoWidget>
@@ -27,7 +28,7 @@ const VideoPlayer = ({ url }) => {
 const VideoWidget = styled.div`
   width: 100%;
   position: relative;
-  padding-top: 56.25%;
+  padding-top: 100%;
 `;
 
 export default VideoPlayer;

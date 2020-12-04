@@ -114,7 +114,7 @@ export default ({
       </NFTColumn>
       <NFTColumn>
         {assetMeta.animation_url ? (
-          <VideoPlayer url={assetMeta.animation_url} />
+          <VideoPlayer url={assetMeta.animation_url} assetInfo={assetInfo} />
         ) : (
           <NFTImageLink
             target="_blank"
