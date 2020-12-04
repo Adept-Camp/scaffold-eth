@@ -1,7 +1,7 @@
 import { Network, OpenSeaPort } from "opensea-js";
 import React, { useEffect, useRef, useState } from "react";
 import { onNetworkUpdate, web3Provider } from "../constants";
-import { SingleNFT } from "../components";
+import { FeaturedNFT, SingleNFT } from "../components";
 
 export default () => {
   const [accountAddress, setAccountAddress] = useState(null);
@@ -26,6 +26,14 @@ export default () => {
   return (
     <div>
       <main>
+        <div className="container py-3">
+          <FeaturedNFT
+            seaport={seaportRef.current}
+            tokenAddress="0x9fed46c6de6c49f0ba2c60401f8f72408a15ee28"
+            tokenId="4"
+            accountAddress={accountAddress}
+          />
+        </div>
         <div className="container py-3">
           <div className="card-deck">
             <SingleNFT

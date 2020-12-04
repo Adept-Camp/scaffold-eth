@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react";
+import { OrderSide } from "opensea-js/lib/types";
 import styled from "styled-components";
 
 import { connectWallet } from "../../constants";
-import AssetMetadata from "./AssetMetadata";
 import SalePrice from "./SalePrice";
 
 import Web3 from "web3";
 import Axios from "axios";
+import VideoPlayer from "../VideoPlayer";
 
 const infuraId = process.env.INFURA_KEY;
 const web3 = new Web3(
@@ -32,13 +33,13 @@ export default ({
 
   const handleLoadAsset = useCallback(async () => {
     setAssetInfo(null);
+    setAssetMeta(null);
     if (seaport) {
       try {
         const asset = await seaport.api.getAsset({
           tokenAddress, // string
           tokenId, // string | number | null
         });
-        console.log(asset);
         setAssetInfo(asset);
       } catch (error) {
         setAssetInfo(null);
@@ -80,60 +81,82 @@ export default ({
     // throw error;
   };
 
-  const fulfillOrder = async () => {
-    if (!accountAddress) {
-      await connectWallet();
-    }
-    try {
-      setCreatingOrder(true);
-      await seaport.fulfillOrder({ order: assetInfo.orders[0], accountAddress });
-    } catch (error) {
-      onError(error);
-    } finally {
-      setCreatingOrder(false);
-    }
-  };
+  const placeBid = () => {};
 
-  const renderBuyButton = (canAccept = true) => {
-    const buyAsset = async () => {
-      if (accountAddress && !canAccept) {
-        setErrorMessage("You already own this asset!");
-        return;
-      }
-      fulfillOrder();
-    };
+  const renderBidButton = () => {
     return (
-      <button disabled={creatingOrder} onClick={buyAsset} className="btn btn-primary w-100">
-        Buy{creatingOrder ? "ing" : ""} for <SalePrice order={assetInfo.orders[0]} />
+      <button onClick={() => placeBid()} className="btn btn-primary w-100">
+        PLACE BID
       </button>
     );
   };
 
-  if (!assetInfo || !assetMeta) return <SingleNFTContainer>Loading •••</SingleNFTContainer>;
+  if (!assetInfo || !assetMeta) return <FeaturedNFTContainer>Loading •••</FeaturedNFTContainer>;
 
-  console.log(assetMeta);
   return (
-    <SingleNFTContainer>
-      <AssetMetadata asset={assetInfo} meta={assetMeta} />
-      {errorMessage ? (
-        <div className="alert alert-warning mb-0" role="alert">
-          {errorMessage}
-        </div>
-      ) : (
-        <li className="list-group-item">{assetInfo.orders.length > 0 && renderBuyButton(!isOwner)}</li>
-      )}
-    </SingleNFTContainer>
+    <FeaturedNFTContainer>
+      <NFTColumn>
+        <h5 className="card-title">{assetInfo.name}</h5>
+        <p className="card-text text-truncate">
+          <a target="_blank" rel="noopener noreferrer" href={assetInfo.openseaLink} className="card-link">
+            {assetInfo.assetContract.name} #{assetInfo.tokenId}
+          </a>
+        </p>
+        <p className="card-text">{assetInfo.description}</p>
+        {errorMessage ? (
+          <div className="alert alert-warning mb-0" role="alert">
+            {errorMessage}
+          </div>
+        ) : (
+          // orders.length > 0 && renderBuyButton(!isOwner)
+          renderBidButton()
+        )}
+      </NFTColumn>
+      <NFTColumn>
+        {assetMeta.animation_url ? (
+          <VideoPlayer url={assetMeta.animation_url} />
+        ) : (
+          <NFTImageLink
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-center d-inline-block m-100"
+            href={assetInfo.openseaLink}
+          >
+            <NFTImg alt="Asset artwork" src={assetInfo.imageUrlOriginal} />
+          </NFTImageLink>
+        )}
+      </NFTColumn>
+    </FeaturedNFTContainer>
   );
 };
 
-const SingleNFTContainer = styled.div.attrs({ className: "card mx-2 mb-4" })`
-  min-width: 200px;
-  img {
-    height: 240px;
-    max-width: 100%;
-  }
-  img.small {
-    max-width: 50%;
-    height: 240px;
-  }
+const FeaturedNFTContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const NFTColumn = styled.div`
+  width: 49%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const NFTImageLink = styled.a`
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+`;
+
+const NFTImg = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 `;
